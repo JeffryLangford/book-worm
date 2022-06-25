@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const Choice = require("./Choice");
 const Comment = require("./Comment");
 const Like = require("./Like");
@@ -64,8 +63,3 @@ module.exports = {
     Post,
     User
 }
-=======
-const User = require('./User');
-
-module.exports = { User }
->>>>>>> c74fffa4b8817336ac260c67bfc28a21415b6292
