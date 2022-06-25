@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "watch": "nodemon server.js",
+    "seed": "node seeds/index.js"
   },
   "repository": {
     "type": "git",
@@ -14,7 +16,10 @@
   "keywords": [],
   "author": "Paul Haberle <paulshaberle@gmail.com> (https://github.com/phaberle?tab=repositories)",
   "license": "MIT",
-  "bugs": {
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  },
+    "bugs": {
     "url": "https://github.com/JeffryLangford/book-worm/issues"
   },
   "homepage": "https://github.com/JeffryLangford/book-worm#readme",
@@ -26,6 +31,7 @@
     "express-session": "^1.17.3",
     "express.js": "^1.0.0",
     "mysql2": "^2.3.3",
+    "nodemon": "^2.0.18",
     "sequelize": "^6.21.0"
   }
 }
