@@ -16,13 +16,13 @@
       </h1>
     </header>
     <main>
-      {{{ body }}}
-    <div>
-      {{#each bestSellingBooks}}
       
-      {{/each}}
-    </div>
-      
+      <h2>Your Books:</h2>
+      <div >
+       {{#each books}} {{@key}}: {{this}}
+       {{/each}}
+        
+      </div>
     </main>
     <footer>
       Thanks for visiting!
