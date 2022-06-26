@@ -1,4 +1,6 @@
+const express = require('express');
 const router = require('express').Router();
+const path = require('path');
 const sequelize = require('../config/connections');
 const { User, Library, Index } = require('../models/');
 
@@ -21,7 +23,7 @@ router.get('/', (req, res) => {
 router.get('/api/books/search', (req, res) => {
   //res.send('POST request received!')
  
-    https.get(url, resp => {
+    https.get(options, resp => {
       let data = '';
       resp.on('data', chunk => { 
           data += chunk;
@@ -89,22 +91,41 @@ https.request(options, resp => {
 
 // GET route for user's books
 router.get('/api/books', (req, res) => 
-Books.findAll()
-    .then((books) => {
-      res.send(books)
+Books.findAll({
+ 
+  raw: true,
+  nest: true
+})
+.then((answers)=>{
+  //const books = answers.map(() => ({ plain: true }));
+  //const response = JSON.stringify(answers);
+  //console.log(response);
+    //response.json( rows )
+ 
+      
+      //const books = JSON.parse(JSON.stringify(response));
+      //nodedata.sensors = sensors.map(function(sensor){ return sensor.toJSON() });
+      //res.send(books)
      
     // destructure books
-    //const [ books ] = answers.map(({title, genre, author}) => ({Title: title, Author: author, Category: genre}));
+    const  books  = answers.map(({title, genre, author}) => ({Title: title, Author: author, Category: genre}));
+    
 
+   
+    console.log(books);
     // render info in books handlebars
       res.render('books',{
           books
+
+          //Title: title, Author: author, Category: genre})
           });
           req.on('error', ()=> {
           console.log('Error :' );
     })
+          
   })
 )
+;
 
 // POST route for user to add a book 
 router.post('/api/newbook', (req, res) => {

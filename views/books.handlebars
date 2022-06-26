@@ -18,9 +18,15 @@
     <main>
       
       <h2>Your Books:</h2>
-      <div >
-       {{#each books}} {{@key}}: {{this}}
+      <div>
+       {{#each books}}  
+       
+       <h3>{{Title}}</h3>
+       <p>Author: {{Author}} </p>
+       <p>Category: {{Category}}</p>
+
        {{/each}}
+       
         
       </div>
     </main>
