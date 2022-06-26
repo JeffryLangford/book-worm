@@ -1,7 +1,7 @@
 const seedUser = require('./seedUser');
 const seedChoice = require('./seedChoice');
 const seedComment = require('./seedComment');
-const seedLike = require('./seedLike');
+const seedVote = require('./seedVote');
 const seedPost = require('./seedPost');
 
 
@@ -20,7 +20,7 @@ const seedAll = async () => {
   await seedComment();
   console.log('\n----- COMMENTS SEEDED -----\n');
   
-  await seedLike();
+  await seedVote();
   console.log('\n----- LIKES SEEDED -----\n');
   
   await seedChoice();

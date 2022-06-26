@@ -16,7 +16,7 @@ const postData = [
         title:"I don't think so",
         post_url: "https://www.utexas.edu/",
         user_id: 3,
-        post_text:"There is not spoon"
+        post_text:"There is no spoon"
     },
     {
         title:"Bring it on home, dude",
