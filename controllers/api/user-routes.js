@@ -33,6 +33,7 @@ router.get('/', (req, res) => {
       });
   });
   
+  //Add User
   router.post('/', (req, res) => {
     // expects {username: 'Lernantino', email: 'lernantino@gmail.com', password: 'password1234'}
     User.create({
@@ -47,6 +48,7 @@ router.get('/', (req, res) => {
       });
   });
   
+  //Login Single User - /api/users/login
   router.post('/login', (req, res) => {
     // expects {email: 'lernantino@gmail.com', password: 'password1234'}
     User.findOne({
@@ -56,6 +58,7 @@ router.get('/', (req, res) => {
     }).then(dbUserData => {
       if (!dbUserData) {
         res.status(400).json({ message: 'No user with that email address!' });
+        console.log(req.body.email);
         return;
       }
   
@@ -70,6 +73,7 @@ router.get('/', (req, res) => {
     });
   });
   
+  //PUT Password Test - /api/users/1
   router.put('/:id', (req, res) => {
     // expects {username: 'Lernantino', email: 'lernantino@gmail.com', password: 'password1234'}
   
@@ -93,6 +97,7 @@ router.get('/', (req, res) => {
       });
   });
   
+  //DELETE /api/users/1
   router.delete('/:id', (req, res) => {
     User.destroy({
       where: {
