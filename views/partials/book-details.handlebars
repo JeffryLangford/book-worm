@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bookworm</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+
+<body>
+  <div class="wrapper">
+    <header>
+      <h1>
+        <a href="/">Bookworm</a>
+      </h1>
+    </header>
+    <main>
+      <!-- THIS NEEDS TO BE ADDED TO FRONT END -->
+      <div>
+      <h2>Your Books:</h2>
+      
+       {{#each books}}  
+       
+       <h3>{{Title}}</h3>
+       <p>Author: {{Author}} </p>
+       <p>Category: {{Category}}</p>
+
+       {{/each}} 
+      </div>
+      <!-- CODE ABOVE RENDERS USER'S BOOKS -->
+
+    </main>
+    <footer>
+      Thanks for visiting!
+    </footer>
+  </div>
+
+</body>
+
+</html>

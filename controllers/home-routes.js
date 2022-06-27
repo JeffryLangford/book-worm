@@ -89,7 +89,7 @@ https.request(options, resp => {
     })
   })
 
-// GET route for user's books
+// GET route for user's books ***THIS CODE WORKS***
 router.get('/api/books', (req, res) => 
 Books.findAll({
  
@@ -97,35 +97,19 @@ Books.findAll({
   nest: true
 })
 .then((answers)=>{
-  //const books = answers.map(() => ({ plain: true }));
-  //const response = JSON.stringify(answers);
-  //console.log(response);
-    //response.json( rows )
- 
-      
-      //const books = JSON.parse(JSON.stringify(response));
-      //nodedata.sensors = sensors.map(function(sensor){ return sensor.toJSON() });
-      //res.send(books)
-     
     // destructure books
     const  books  = answers.map(({title, genre, author}) => ({Title: title, Author: author, Category: genre}));
-    
-
-   
     console.log(books);
-    // render info in books handlebars
-      res.render('books',{
-          books
 
-          //Title: title, Author: author, Category: genre})
+    // render info in books handlebars
+      res.render('partials/book-details',{
+          books
           });
           req.on('error', ()=> {
           console.log('Error :' );
-    })
-          
+    })      
   })
-)
-;
+);
 
 // POST route for user to add a book 
 router.post('/api/newbook', (req, res) => {
@@ -158,11 +142,27 @@ router.get('/api/bestsellers', (req, res) => {
     });
     // parse data
     resp.on('end', () => {
-        res.json(JSON.parse(data))
-    });
+        //res.json(JSON.parse(data))
+
+        // parse data
+        const answers = JSON.parse(data);
+        // destructure object
+        const { results: {books}} = answers;
+        //console.log(books);
+
+        // create a new array of bestselling books 
+        const nyTimes = books.map(({rank, title, author, description}) => ({Rank: rank, Title: title, Author: author, Description: description}));
+        console.log(nyTimes);
+      });
   })
-  .on('error', (err) => {
-    console.log('Error: ' + err.message);
+
+    // render info in books handlebars
+    res.render('partials/bestsellers-details',{
+      nyTimes
+      });
+      req.on('error', ()=> {
+      console.log('Error :' );
+
   });
 });
 
