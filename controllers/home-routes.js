@@ -11,38 +11,51 @@ const { title } = require('process');
 const { callbackify } = require('util');
 
 // add user response to url ${} testing parameters
-//let url = `https://www.googleapis.com/books/v1/volumes?q=fiction+mystery`;
+let url = `https://www.googleapis.com/books/v1/volumes?q=fiction+mystery`;
 let bestSellers = "https://api.nytimes.com/svc/books/v3/lists/hardcover-fiction.json?api-key=tZFDyz4NLXMBFeRo9UhOkGW5lVUo7Lr6";
-const options = new URL('https://www.googleapis.com/books/v1/volumes?q=fiction+myster');
+//const options = new URL('https://www.googleapis.com/books/v1/volumes?q=fiction+myster');
+
 // GET route for homepage
 router.get('/', (req, res) => {
   res.render('homepage');
 });
 
-// GET route for book recommendations
+// GET route for book recommendations ***THIS CODE WORKS***
 router.get('/api/books/search', (req, res) => {
   //res.send('POST request received!')
  
-    https.get(options, resp => {
+    https.get(url, resp => {
       let data = '';
       resp.on('data', chunk => { 
           data += chunk;
       });
       // parse data
       resp.on('end', () => {
-          res.json(JSON.parse(data))
-          console.log(data);
-      });
+        const answers = JSON.parse(data);
+          //console.log(answers);
+
+        // destructure and create new array
+        const { items } = answers;
+        //console.log(items);
+        const searchBooks = items.map(({volumeInfo: {title, authors, description, categories, imageLinks: {thumbnail}}}
+          ) => ({Title: title, Author: [authors], Description: description, Category: [categories], Picture: thumbnail}));
+       //console.log(searchBooks);
+
+      // render info in books handlebars
+      res.render('partials/library-details',{
+      searchBooks
+      })
+      req.on('error', ()=> {
+        console.log('Error :' );
+      })
     })
-    .on('error', (err) => {
-      console.log('Error: ' + err.message);
-    });
-  });
+  })
+});
 
 // POST route to add book recs to database
 router.post('/api/books/add', (req, res) => {
 
-https.request(options, resp => {
+https.request(url, resp => {
       let data = '';
       resp.on('data', chunk => { 
           data += chunk;
@@ -53,9 +66,10 @@ https.request(options, resp => {
           //getBooks(data);
          console.log(data);
       })
-          .on('error', function () {
-            console.log('Error :');
+          req.on('error', function () {
+            //console.log('Error :');
       })
+    })
 /*
           const { items: [{volumeInfo}]} =  data;
           const [ categories ] = volumeInfo.categories;
@@ -87,7 +101,7 @@ https.request(options, resp => {
       })
 */
     })
-  })
+  //})
 
 // GET route for user's books ***THIS CODE WORKS***
 router.get('/api/books', (req, res) => 
@@ -111,7 +125,7 @@ Books.findAll({
   })
 );
 
-// POST route for user to add a book 
+// POST route for user to add a book ****************************
 router.post('/api/newbook', (req, res) => {
   const data = {
       title: 'Testing Here',
@@ -127,13 +141,16 @@ router.post('/api/newbook', (req, res) => {
       author,
       //description
   })
-  .then(books => res.send('Book has been added to profile!'))
+  .then(() => res.send('Book has been added to profile!'))
+  //res.render('partials/book-details',{
+    //send user back to book homepage
+    //})
   .catch(err => {
       console.log(err);
   })
-})
+});
 
-// GET route for bestsellers
+// GET route for bestsellers *** THIS CODE WORKS ***
 router.get('/api/bestsellers', (req, res) => {
   https.get(bestSellers, (resp) => {
     let data = '';
