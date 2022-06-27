@@ -18,7 +18,18 @@
     <main>
       <!-- THIS NEEDS TO BE ADDED TO FRONT END -->
       <div>
-      <h2>Bestsellers:</h2>
+
+        <!-- add search bar here for user to search by topic -->
+      <h2>New York Times Bestsellers:</h2>
+      {{#each nyTimes}}  
+       
+       <h3>{{Rank}}. {{Title}}</h3>
+       
+       <p>Author: {{Author}} </p>
+       
+       <p>Description: {{Description}}</p>
+
+       {{/each}} 
  
       </div>
       <!-- CODE ABOVE RENDERS USER'S BOOKS -->

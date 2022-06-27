@@ -153,8 +153,7 @@ router.get('/api/bestsellers', (req, res) => {
         // create a new array of bestselling books 
         const nyTimes = books.map(({rank, title, author, description}) => ({Rank: rank, Title: title, Author: author, Description: description}));
         console.log(nyTimes);
-      });
-  })
+  
 
     // render info in books handlebars
     res.render('partials/bestsellers-details',{
@@ -162,6 +161,8 @@ router.get('/api/bestsellers', (req, res) => {
       });
       req.on('error', ()=> {
       console.log('Error :' );
+    });
+  })
 
   });
 });
