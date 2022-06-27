@@ -1,44 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
+      <!-- RENDERS USER'S LIBRARY -->
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bookworm</title>
-  <link rel="stylesheet" href="/stylesheets/style.css">
-</head>
-
-<body>
-  <div class="wrapper">
-    <header>
-      <h1>
-        <a href="/">Bookworm</a>
-      </h1>
-    </header>
-    <main>
-      <!-- THIS NEEDS TO BE ADDED TO FRONT END -->
       <div>
-      <h2>Your Book Recommendations:</h2>
+      <h2>Your Library:</h2>
       
-       {{#each searchBooks}}  
+       {{#each books}}  
        
        <h3>{{Title}}</h3>
-       <img src="{{Picture}}" alt="book image" width="auto">
-       <button type="button" id="add-book">Add Book</button>
+
        <p>Author: {{Author}} </p>
        <p>Category: {{Category}}</p>
        <p>Description: {{Description}} </p>
       
        {{/each}} 
       </div>
-      <!-- CODE ABOVE RENDERS USER'S BOOKS -->
+      <!-- RENDERS USER'S LIBRARY -->
 
-    </main>
-    <footer>
-      Thanks for visiting!
-    </footer>
-  </div>
-
-</body>
-
-</html>

@@ -2,18 +2,14 @@ const express = require('express');
 const router = require('express').Router();
 const path = require('path');
 const sequelize = require('../config/connections');
-const { User, Library, Index } = require('../models/');
+//const { User, Library, Index } = require('../models/');
 
 const Books = require('../models/Library');
 const https = require('https');
-const { response } = require('express');
-const { title } = require('process');
-const { callbackify } = require('util');
 
-// add user response to url ${} testing parameters
+// add user's parameters to url** // testing parameters 
 let url = `https://www.googleapis.com/books/v1/volumes?q=fiction+mystery`;
 let bestSellers = "https://api.nytimes.com/svc/books/v3/lists/hardcover-fiction.json?api-key=tZFDyz4NLXMBFeRo9UhOkGW5lVUo7Lr6";
-//const options = new URL('https://www.googleapis.com/books/v1/volumes?q=fiction+myster');
 
 // GET route for homepage
 router.get('/', (req, res) => {
@@ -41,8 +37,8 @@ router.get('/api/books/search', (req, res) => {
           ) => ({Title: title, Author: [authors], Description: description, Category: [categories], Picture: thumbnail}));
        //console.log(searchBooks);
 
-      // render info in books handlebars
-      res.render('partials/library-details',{
+      // render info in library partials handlebars
+      res.render('partials/book-details',{
       searchBooks
       })
       req.on('error', ()=> {
@@ -52,7 +48,7 @@ router.get('/api/books/search', (req, res) => {
   })
 });
 
-// POST route to add book recs to database
+// POST route to add book recs to database *****************************
 router.post('/api/books/add', (req, res) => {
 
 https.request(url, resp => {
@@ -115,8 +111,8 @@ Books.findAll({
     const  books  = answers.map(({title, genre, author}) => ({Title: title, Author: author, Category: genre}));
     console.log(books);
 
-    // render info in books handlebars
-      res.render('partials/book-details',{
+    // render info in books partials handlebars
+      res.render('partials/library-details',{
           books
           });
           req.on('error', ()=> {
@@ -125,12 +121,14 @@ Books.findAll({
   })
 );
 
-// POST route for user to add a book ****************************
-router.post('/api/newbook', (req, res) => {
+// POST route for user to add a book ***THIS CODE WORKS***
+    // add functionality for user to input data into form and add to database in PUBLIC JS
+router.post('/api/books/new', (req, res) => {
+  // dummy data to add a book
   const data = {
-      title: 'Testing Here',
+      title: 'Testing Title',
       genre: 'fiction',
-      author: 'Testing Here',   
+      author: 'Testing Author',   
   }
 
   let { title, genre, author } = data;
@@ -138,12 +136,12 @@ router.post('/api/newbook', (req, res) => {
   Books.create({
       title, 
       genre,
-      author,
+      author
       //description
   })
   .then(() => res.send('Book has been added to profile!'))
   //res.render('partials/book-details',{
-    //send user back to book homepage
+    //send user back to library page?
     //})
   .catch(err => {
       console.log(err);
@@ -168,19 +166,17 @@ router.get('/api/bestsellers', (req, res) => {
         //console.log(books);
 
         // create a new array of bestselling books 
-        const nyTimes = books.map(({rank, title, author, description}) => ({Rank: rank, Title: title, Author: author, Description: description}));
+        const nyTimes = books.map(({rank, title, author, description, book_image}) => ({Rank: rank, Title: title, Author: author, Description: description, Picture: book_image}));
         console.log(nyTimes);
   
-
-    // render info in books handlebars
+    // render info in bestsellers partials handlebars
     res.render('partials/bestsellers-details',{
       nyTimes
       });
       req.on('error', ()=> {
       console.log('Error :' );
-    });
-  })
-
+      });
+    })
   });
 });
 
