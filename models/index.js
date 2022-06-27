@@ -16,11 +16,11 @@ Post.belongsTo(User, {
     foreignKey:'user_id'
 });
 
-// User.belongsToMany(Post, {
-//     through: Vote,
-//     // as: 'liked_posts',
-//     foreignKey: 'user_id'
-// });
+User.belongsToMany(Post, {
+    through: Vote,
+     as: 'voted_posts',
+    foreignKey: 'user_id'
+});
 
 //============== early AM changes above=========
 
@@ -41,7 +41,7 @@ Vote.belongsTo(Post, {
 });
 
 Choice.belongsTo(User, {
-    foreignKey: 'choice_id'
+    foreignKey: 'user_id'
 })
 
 User.hasMany(Vote, {
