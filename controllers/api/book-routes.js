@@ -14,8 +14,10 @@ let bestSellers = "https://api.nytimes.com/svc/books/v3/lists/hardcover-fiction.
 // GET route for book recommendations (api/books/recs) ***THIS CODE WORKS*** 
 router.get('/recs', (req, res) => {
   //res.send('GET request received!');
- 
+    const category = req.body.category;
+
     https.get(url, resp => {
+      
       let data = '';
       resp.on('data', chunk => { 
           data += chunk;
@@ -52,7 +54,7 @@ router.post('/recs', (req, res) => {
     user_id: req.body.user_id,
     genre: req.body.genre
   })
-    .then(dbPostData => res.json(dbPostData))
+    .then(answers => res.json(answers))
     .catch(err => {
       console.log(err);
       res.status(500).json(err);
@@ -148,9 +150,6 @@ router.get('/bestsellers', (req, res) => {
         // destructure object
         const { results:{ list_name, books}} = answers;
         console.log(list_name);
-        //const { results } =answers;
-        //const genre = results.list_name;
-        //console.log(results);
         
         // create a new array of bestselling books 
         const nyTimes = books.map(({rank, title, author, description, book_image}) => ({Rank: rank, Title: title, Author: author, Description: description, Picture: book_image}));
