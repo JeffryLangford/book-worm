@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 });
 
 // GET route for book recommendations ***THIS CODE WORKS***
-router.get('/api/books/search', (req, res) => {
+router.get('/api/books/recs', (req, res) => {
   //res.send('POST request received!')
  
     https.get(url, resp => {
@@ -49,7 +49,8 @@ router.get('/api/books/search', (req, res) => {
 });
 
 // POST route to add book recs to database *****************************
-router.post('/api/books/add', (req, res) => {
+router.post('/api/books/likes', (req, res) => {
+   console.log(req.body);
 
 https.request(url, resp => {
       let data = '';
@@ -66,6 +67,7 @@ https.request(url, resp => {
             //console.log('Error :');
       })
     })
+
 /*
           const { items: [{volumeInfo}]} =  data;
           const [ categories ] = volumeInfo.categories;
@@ -121,13 +123,13 @@ Books.findAll({
   })
 );
 
-// POST route for user to add a book ***THIS CODE WORKS***
+// POST route for user to add a new book into database ***THIS CODE WORKS***
     // add functionality for user to input data into form and add to database
 router.post('/api/books/new', (req, res) => {
   // dummy data to add a book
   const data = {
       title: 'Testing Title',
-      genre: 'fiction',
+      genre: 'Fiction',
       author: 'Testing Author',   
   }
 
