@@ -1,8 +1,6 @@
-const searchRecs = document.querySelector('.search-bar');
-const searchInput = document.getElementById("searchInput");
-
 const bestSellers = document.querySelectorAll('.bestsellers');
 
+// function to add a bestseller book to user's library
 bestSellers.forEach(button => {
     button.addEventListener('click', function(event) {
         const button = event.currentTarget
@@ -26,15 +24,15 @@ bestSellers.forEach(button => {
         },
     })
     if (Response.ok) {
-        // take user to their library of books
+        // take user to their library of books?
         document.location.replace('/api/books/library');
-    //} else {
-       // alert(response.statusText);
+    } else {
+       alert(response.statusText);
         }
     })
 });
 
-
+// function to add a book rec to user's library 
 const bookRecs = document.querySelectorAll('.bookRecs');
 
 bookRecs.forEach(button => {
