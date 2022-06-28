@@ -37,12 +37,7 @@ Choice.init(
         genre: {
             type: DataTypes.STRING,
             allowNull: false
-        },
-        copyright: {
-            type: DataTypes.STRING,
-            allowNull: false
         }
-
     },
     {
         sequelize,

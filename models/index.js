@@ -24,11 +24,11 @@ User.belongsToMany(Post, {
 
 //============== early AM changes above=========
 
-Post.belongsToMany(User, {
-    through: Vote,
-    // as: 'liked_posts',
-    foreignKey: 'post_id'
-});
+// Post.belongsToMany(User, {
+//     through: Vote,
+//     // as: 'liked_posts',
+//     foreignKey: 'post_id'
+// });
 
 
 //additional associations for many to many relationship to work
@@ -44,12 +44,21 @@ Choice.belongsTo(User, {
     foreignKey: 'user_id'
 })
 
+Post.hasMany(Choice,{
+    foreignKey:"post_id",
+    OnDelete: "CASCADE"
+})
+
+
+
 User.hasMany(Vote, {
     foreignKey: 'user_id'
 });
 
 Post.hasMany(Vote, {
-    foreignKey: 'post_id'
+    foreignKey: 'post_id',
+    OnDelete:'CASCADE'
+    
 });
 
 Comment.belongsTo(User, {
@@ -57,7 +66,8 @@ Comment.belongsTo(User, {
 });
 
 Comment.belongsTo(Post, {
-    foreignKey: 'post_id'
+    foreignKey: 'post_id',
+    onDelete:'CASCADE'
 });
 
 User.hasMany(Comment, {
@@ -65,7 +75,8 @@ User.hasMany(Comment, {
 });
 
 Post.hasMany(Comment, {
-    foreignKey: 'post_id'
+    foreignKey: 'post_id',
+    OnDelete:'CASCADE'
 });
 
 module.exports = {
