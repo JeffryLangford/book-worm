@@ -3,14 +3,14 @@
       <h2>Your Recommendations:</h2>
       
        {{#each searchBooks}}  
-       
+       <div>
        <h3>{{Title}}</h3>
        
         <img src="{{Picture}}" alt="book image" width="auto">
-        <button type="button" id="add-book">Add Book</button>
+        <button class="bookRecs" type="button" data-title="{{Title}}" data-author="{{Author}}" data-genre="{{Category}}">Add Book</button>
        <p>Author: {{Author}} </p>
        <p>Category: {{Category}}</p>
-
+      </div>
        {{/each}} 
       </div>
       <!-- CODE ABOVE RENDERS RECS -->

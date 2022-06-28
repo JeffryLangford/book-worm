@@ -1,7 +1,8 @@
 const { Model, DataTypes } = require("sequelize");
-const sequelize = require('../config/connections');
+const { User } = require('../models/User');
+//const { FOREIGNKEYS } = require("sequelize/types/query-types");
+const sequelize = require('../config/connection');
 
-//const db = require('../db');
 class Books extends Model {}
 
 Books.init(
@@ -19,7 +20,16 @@ Books.init(
     },
     author: {
         type: DataTypes.STRING
-    }//,
+    },
+    user_id: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: 'user',
+            key: 'id'
+        }
+    },
+    
+    //,
     //description: {
         //type: DataTypes.STRING
     //}

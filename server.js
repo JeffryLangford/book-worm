@@ -33,6 +33,7 @@ app.use(express.static(path.join(__dirname,'public'))); // <-- express.static() 
 
 //turn on routes
 app.use(routes);
+
 //turn on connection to db and server, .sync is like EF initialize changes from model to db
 sequelize.sync({ force: false }).then(() => {
     app.listen(PORT, () => console.log('Now listening'));

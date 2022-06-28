@@ -3,11 +3,13 @@ const Comment = require("./Comment");
 const Vote = require("./Vote");
 const Post = require("./Post");
 const User = require("./User");
+const Books = require("./library");
 
 
 //many to many relationship - defined in votes model
 
 //=============================================
+// TESTING BOOKS ASSOCIATION TO USER
 User.hasMany(Post,{
     foreignKey:'user_id'
 });
@@ -20,6 +22,10 @@ User.belongsToMany(Post, {
     through: Vote,
      as: 'voted_posts',
     foreignKey: 'user_id'
+});
+
+User.hasMany(Books,{
+    foreignKey:'user_id'
 });
 
 //============== early AM changes above=========

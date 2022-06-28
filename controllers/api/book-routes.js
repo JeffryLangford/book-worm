@@ -1,24 +1,19 @@
 const express = require('express');
 const router = require('express').Router();
 const path = require('path');
-const sequelize = require('../../config/connections');
+const sequelize = require('../../config/connection');
 //const { User, Library, Index } = require('../models/');
 
-const Books = require('../../models/Library');
+const Books = require('../../models/library');
 const https = require('https');
 
 // add user's parameters to url** // testing parameters 
 let url = `https://www.googleapis.com/books/v1/volumes?q=fiction+mystery`;
 let bestSellers = "https://api.nytimes.com/svc/books/v3/lists/hardcover-fiction.json?api-key=tZFDyz4NLXMBFeRo9UhOkGW5lVUo7Lr6";
 
-// GET route for homepage
-router.get('/', (req, res) => {
-  res.render('homepage');
-});
-
-// GET route for book recommendations ***THIS CODE WORKS***
-router.get('/api/books/recs', (req, res) => {
-  //res.send('POST request received!')
+// GET route for book recommendations (api/books/recs) ***THIS CODE WORKS*** 
+router.get('/recs', (req, res) => {
+  //res.send('GET request received!');
  
     https.get(url, resp => {
       let data = '';
@@ -45,113 +40,99 @@ router.get('/api/books/recs', (req, res) => {
         console.log('Error :' );
       })
     })
-  })
+  }) 
 });
 
-// POST route to add book recs to database *****************************
-router.post('/api/books/likes', (req, res) => {
-   console.log(req.body);
-
-https.request(url, resp => {
-      let data = '';
-      resp.on('data', chunk => { 
-          data += chunk;
-      });
-      // parse data
-      resp.on('end', () => { // async
-          res.json(JSON.parse(data))
-          //getBooks(data);
-         console.log(data);
-      })
-          req.on('error', function () {
-            //console.log('Error :');
-      })
-    })
-
-/*
-          const { items: [{volumeInfo}]} =  data;
-          const [ categories ] = volumeInfo.categories;
-          const [ authors ] = volumeInfo.authors;
-      
-          //const { volumeInfo: [categories] } = items;
-         
-          const newBooks = {
-              title: volumeInfo.title,
-              genre: categories,
-              author: authors,
-              //description: volumeInfo.description,
-          }
-          console.log(newBooks);
-        
-          Books.create({ //await
-          title: newBooks.title,
-          genre: newBooks.genre,
-          author: newBooks.author,
-          //description: newBooks.description
-      })
-      .then(function (data) {
-          if (data) {
-              response.send(data);
-              console.log('Book added to your profile!');
-      } else {
-          response.status(400).send('Error in adding books!');   
-        }     
-      })
-*/
-    })
-  //})
-
-// GET route for user's books ***THIS CODE WORKS***
-router.get('/api/books', (req, res) => 
-Books.findAll({
- 
-  raw: true,
-  nest: true
-})
-.then((answers)=>{
-    // destructure books
-    const  books  = answers.map(({title, genre, author}) => ({Title: title, Author: author, Category: genre}));
-    console.log(books);
-
-    // render info in books partials handlebars
-      res.render('partials/library-details',{
-          books
-          });
-          req.on('error', ()=> {
-          console.log('Error :' );
-    })      
+// POST route to add book recs to database(api/books/recs)*****************************
+router.post('/recs', (req, res) => {
+   //res.send(req.body);
+   Books.create({
+    title: req.body.title,
+    author: req.body.author,
+    user_id: req.body.user_id,
+    genre: req.body.genre
   })
-);
+    .then(dbPostData => res.json(dbPostData))
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
 
-// POST route for user to add a new book into database ***THIS CODE WORKS***
-    // add functionality for user to input data into form and add to database
-router.post('/api/books/new', (req, res) => {
-  // dummy data to add a book
-  const data = {
-      title: 'Testing Title',
-      genre: 'Fiction',
-      author: 'Testing Author',   
+// GET route for user's books (api/books/library) ***THIS CODE WORKS*** 
+router.get('/library', (req, res) => 
+
+  Books.findAll({
+    attributes: ['id',
+      'user_id',
+      'title',
+      'author',
+      'genre',    
+    ],
+    where: {
+    user_id: req.body.user_id
   }
+})
+.then((answers) => {
+    // destructure books
+    const  books  = answers.map(({title, genre, author, user_id, id}) => ({Title: title, Author: author, Category: genre, User: user_id, Id: id}));
+    console.log(books);
+  
+    // render info in books partials handlebars
+    res.render('partials/library-details',{
+        books
+        });
+        req.on('error', ()=> {
+        console.log('Error :' );
+    }) 
+  })
+)
 
-  let { title, genre, author } = data;
+// POST route for user to add a new book into database (api/books/new) ***THIS CODE WORKS***
+    // add functionality for user to input data into form and add to database   
+router.post('/new', (req, res) => {
+  
   // insert into table
   Books.create({
-      title, 
-      genre,
-      author
-      //description
+       title: req.body.title,
+       genre: req.body.genre,
+       author: req.body.author, 
+       user_id: req.body.user_id   
   })
-  .then(() => res.send('Book has been added to profile!'))
-  //res.render('partials/book-details',{
-    //send user back to library page?
-    //})
-  .catch(err => {
+  .then(answer => res.json(answer))
+  
+    //res.send('YOUR BOOK WAS ADDED!')
+    .catch(err => {
       console.log(err);
-  })
+      res.status(500).json(err);
+    })
 });
 
-// GET route for bestsellers *** THIS CODE WORKS ***
-router.get('/api/bestsellers', (req, res) => {
+// DELETE route for user to delete book by id (/api/books/:id) **THIS CODE WORKS**
+router.delete('/:id', (req, res) => {
+  Books.destroy({
+    where: {
+      user_id: req.body.user_id,
+      id: req.params.id
+    }
+  })
+    .then(answer => {
+      if (!answer) {
+        res.status(404).json({ message: 'No book found with this id' });
+        return;
+      }
+      res.json(answer);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
+
+
+// GET route for bestsellers (api/books/bestsellers) *** THIS CODE WORKS ***
+  // add book to library functionality 
+router.get('/bestsellers', (req, res) => {
   https.get(bestSellers, (resp) => {
     let data = '';
     resp.on('data', chunk => { 
@@ -163,23 +144,46 @@ router.get('/api/bestsellers', (req, res) => {
 
         // parse data
         const answers = JSON.parse(data);
+        console.log(data);
         // destructure object
-        const { results: {books}} = answers;
-        //console.log(books);
-
+        const { results:{ list_name, books}} = answers;
+        console.log(list_name);
+        //const { results } =answers;
+        //const genre = results.list_name;
+        //console.log(results);
+        
         // create a new array of bestselling books 
         const nyTimes = books.map(({rank, title, author, description, book_image}) => ({Rank: rank, Title: title, Author: author, Description: description, Picture: book_image}));
         console.log(nyTimes);
+        
   
     // render info in bestsellers partials handlebars
     res.render('partials/bestsellers-details',{
-      nyTimes
+      nyTimes,
+      list_name
+      //genre
       });
       req.on('error', ()=> {
       console.log('Error :' );
       });
     })
   });
+});
+
+// POST route to add a bestseller to user's library (api/books/bestsellers) ***THIS CODE WORKS***
+router.post('/bestsellers', (req, res) => {
+  //res.send(req.body);
+  Books.create({
+    title: req.body.title,
+    author: req.body.author,
+    user_id: req.body.user_id,
+    genre: req.body.genre
+  })
+    .then(answer => res.json(answer))
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 module.exports = router;
