@@ -1,1 +1,49 @@
-<div>You are on the homepage</div>
+{{#if loggedIn}}
+<div class="w-100 p-4 d-inline-flex justify-content">
+    <div class="w-10 vh-100 bg-success border-right rounded"></div>
+    <div class="p-2 mx-2">
+        <p class="h2 text-start">My Preferences</p>
+        <p class="h2 text-start">Recommended Books</p>
+    </div>
+</div>
+
+{{else}}
+<div class="d-inline-flex justify-content-between">
+    <div class="bg-success bg-opacity-50 m-2 w-50 p-4 border-top border-bottom border-3 border-secondary rounded">
+      <h1 class="display-1 text-end">Book Worm</h1>
+      <h2 class="h1 text-end">A Comprehensive Book Cataloging System</h2>
+    </div>
+    <img src="/images/books.jpg" alt="Hero Image" class="w-50 mh-25 m-2 border-top border-bottom border-3 border-secondary rounded">
+</div>
+<div class="mt-2 d-inline-flex justify-content-around">
+    <div class="w-33 p-2 bg-success bg-opacity-25 border-top border-bottom border-3 border-secondary border-opacity-75 rounded">
+        <p class="h5 p-4">Bookworm is a website that brings both avid and amateur readers together to expand their imaginations through the power of books.</p>
+        <p class="h5 p-4">Based on your preferred genres and interests, we make recommendations that are sure to broaden your publication horizons.</p>
+        <p class="h5 p-4">Bookworm creates a sense of community as users can like and comment on titles, as well as participate in recommendations.</p>
+    </div>
+    <img src="/images/placeholder.png" alt="New York Times Bestseller" class="w-25">
+    <div class="w-33 p-2 bg-success bg-opacity-25 border-top border-bottom border-3 border-secondary border-opacity-75 rounded">
+        <p class="h5 p-4">Sign up down below to store your preferences and keep track of your favorite books!</p>
+        <form class="signup-form m-2">
+            </br>
+            <div class="d-flex justify-content-center">
+                <div class="p-1">
+                    <label for="username-signup" class="p-2">username</label></br>
+                    <label for="email-signup" class="p-2">email</label></br>
+                    <label for="password-signup" class="p-2">password</label>
+                </div>
+                <div class="my-2">
+                    <input type="text" id="username-signup" class="rounded my-1"/></br>
+                    <input type="text" id="email-signup" class="rounded my-1"/></br>
+                    <input type="password" id="password-signup" class="rounded my-1"/>
+                </div>
+            </div>
+            <div>
+                <button type="submit" id="button" class="btn-success btn m-1">signup</button>
+            </div>
+            </form>
+            <script src="/js/login.js"></script>
+    </div>
+</div>
+<!--<script src="/public/js/api-fetch.js"></script>-->
+{{/if}}
