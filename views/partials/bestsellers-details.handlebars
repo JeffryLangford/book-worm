@@ -1,0 +1,19 @@
+
+      <!-- THIS RENDER'S NYTIMES BESTSELLERS ACCORDING TO USER INPUT -->
+      <div>
+
+        <!-- add search bar here for user to search by genre + topic -->
+      <h2>New York Times Bestsellers:</h2>
+      {{#each nyTimes}}  
+       
+       <h3>{{Rank}}. {{Title}}</h3>
+       <img src="{{Picture}}" alt="book image" width="auto">
+       
+       <p>Author: {{Author}} </p>
+       
+       <p>Description: {{Description}}</p>
+
+       {{/each}} 
+ 
+      </div>
+      <!-- CODE ABOVE RENDERS BESTSELLERS -->

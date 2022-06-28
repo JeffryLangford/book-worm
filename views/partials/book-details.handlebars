@@ -1,0 +1,16 @@
+      <!-- THIS RENDERS BOOK RECS  -->
+      <div>
+      <h2>Your Recommendations:</h2>
+      
+       {{#each searchBooks}}  
+       
+       <h3>{{Title}}</h3>
+       
+        <img src="{{Picture}}" alt="book image" width="auto">
+        <button type="button" id="add-book">Add Book</button>
+       <p>Author: {{Author}} </p>
+       <p>Category: {{Category}}</p>
+
+       {{/each}} 
+      </div>
+      <!-- CODE ABOVE RENDERS RECS -->
