@@ -1,32 +1,45 @@
-<form class="login-form">
-  <div>
-    <label for="email-login">email:</label>
-    <input type="text" id="email-login" />
+<div class="d-inline-flex justify-content-between">
+    <div class="bg-success bg-opacity-50 m-2 w-50 p-4 border-top border-bottom border-3 border-secondary rounded">
+      <h1 class="display-1 text-end">Book Worm</h1>
+      <h2 class="h1 text-end">A Comprehensive Book Cataloging System</h2>
+    </div>
+    <img src="/images/books.jpg" alt="Hero Image" class="w-50 mh-25 m-2 border-top border-bottom border-3 border-secondary rounded">
+</div>
+
+<form class="login-form m-3">
+  <p class="h5">Enter your login details</p>
+  <div class="d-flex justify-content-center">
+    <div class="p-1">
+      <label for="email-login" class="p-2">email</label></br>
+      <label for="password-login" class="p-2">password</label>
+    </div>
+    <div class="my-2">
+      <input type="text" id="email-login" class="rounded my-1"/></br>
+      <input type="password" id="password-login" class="rounded my-1"/>
+    </div>
   </div>
   <div>
-    <label for="password-login">password:</label>
-    <input type="password" id="password-login" />
-  </div>
-  <div>
-    <button type="submit">login</button>
+    <button type="submit" id="button" class="btn-success btn m-1">login</button>
   </div>
 </form>
 
-<form class="signup-form">
-  <div>
-    <label for="username-signup">username:</label>
-    <input type="text" id="username-signup" />
+<form class="signup-form m-2">
+  <p class="h4 text-success">or</p>
+  <p class="h5">Sign up</p>
+  <div class="d-flex justify-content-center">
+    <div class="p-1">
+      <label for="username-signup" class="p-2">username</label></br>
+      <label for="email-signup" class="p-2">email</label></br>
+      <label for="password-signup" class="p-2">password</label>
+    </div>
+    <div class="my-2">
+      <input type="text" id="username-signup" class="rounded my-1"/></br>
+      <input type="text" id="email-signup" class="rounded my-1"/></br>
+      <input type="password" id="password-signup" class="rounded my-1"/>
+    </div>
   </div>
   <div>
-    <label for="email-signup">email:</label>
-    <input type="text" id="email-signup" />
-  </div>
-  <div>
-    <label for="password-signup">password:</label>
-    <input type="password" id="password-signup" />
-  </div>
-  <div>
-    <button type="submit">signup</button>
+    <button type="submit" id="button" class="btn-success btn m-1">signup</button>
   </div>
 </form>
 <script src="/js/login.js"></script>
