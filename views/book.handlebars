@@ -1,0 +1,8 @@
+<section class="container">
+  <h3>{{book.name}}</h3>
+  <section class="flex-row justify-center">
+    {{#each book.paintings as |painting|}}
+    {{> painting-details}}
+    {{/each}}
+  </section>
+</section>
