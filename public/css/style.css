@@ -1,0 +1,74 @@
+.w-50 {
+  width: 50%;
+  max-height: 250px;
+}
+
+.w-85 {
+  width: 85%;
+}
+
+.w-33 {
+  width: 33%;
+}
+
+.mw-22 {
+  max-width: 22%;
+}
+
+.w-10 {
+  width: 10%;
+}
+
+/* Creating stylized lines */
+.border-right {
+  border-right: 1rem solid;
+  border-top: 1rem solid;
+  border-color: #6c757d!important;
+  opacity: 75%;
+}
+
+.border-left {
+  border-left: 1rem solid;
+  border-top: 1rem solid;
+  border-color: #6c757d!important;
+  opacity: 75%;
+}
+
+/* Style The Dropdown Button */
+.dropbtn {
+  padding: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #4fb37a;
+  min-width: 120px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+  .dropdown-content a {
+  color: black;
+  padding: 10px 20px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #95ffb5}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
