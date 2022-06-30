@@ -2,6 +2,7 @@ const router = require('express').Router();
 const path = require('path');
 const axios = require("axios");
 const { Choice, User, Comment, Post } = require('../../models');
+const Books = require('../../models/library');
 //const Books = require('../../models/library');
 
 // GET route for book recs using axios (api/books/recs) ***THIS CODE WORKS***
@@ -36,12 +37,11 @@ router.get('/recs', async (req, res) => {
 // POST route to add book recs to database(api/books/recs)*****************************
 router.post('/recs', (req, res) => {
    //res.send(req.body);
-   Choice.create({
+   Books.create({
     title: req.body.title,
     author: req.body.author,
     user_id: req.body.user_id,
     genre: req.body.genre,
-    post_id: req.body.post_id
   })
     .then(answers => res.json(answers))
     .catch(err => {
@@ -54,7 +54,7 @@ router.post('/recs', (req, res) => {
   // this route can be moved to user-routes.js
 router.get('/library', (req, res) => 
 
-  Choice.findAll({
+  Books.findAll({
     attributes: ['id',
       'user_id',
       'title',
@@ -87,7 +87,7 @@ router.get('/library', (req, res) =>
 router.post('/new', (req, res) => {
   
   // insert into table
-  Choice.create({
+  Books.create({
        title: req.body.title,
        genre: req.body.genre,
        author: req.body.author, 
@@ -106,7 +106,7 @@ router.post('/new', (req, res) => {
 
 // DELETE route for user to delete book by id (/api/books/:id) **THIS CODE WORKS**
 router.delete('/:id', (req, res) => {
-  Choice.destroy({
+  Books.destroy({
     where: {
       user_id: req.body.user_id,
       id: req.params.id
@@ -155,12 +155,11 @@ router.get('/bestsellers', async (req, res) => {
 // POST route to add a bestseller to user's library (api/books/bestsellers) ***THIS CODE WORKS***
 router.post('/bestsellers', (req, res) => {
   //res.send(req.body);
-  Choice.create({
+  Books.create({
     title: req.body.title,
     author: req.body.author,
     user_id: req.body.user_id,
     genre: req.body.genre,
-    post_id: req.body.post_id
   })
     .then(answer => res.json(answer))
     .catch(err => {
@@ -170,6 +169,8 @@ router.post('/bestsellers', (req, res) => {
 });
 
 // GET route for user's dashboard (api/books/dashboard) ***THIS CODE WORKS*** 
+  // this route can also be moved to user-routes.js
+  // Choice table needs to be added 
 router.get('/dashboard', async (req, res) => {
  const results = await User.findAll({
  
