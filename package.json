@@ -8,7 +8,6 @@
     "start": "node server.js",
     "watch": "nodemon server.js",
     "seed": "node seeds/index.js"
-
   },
   "repository": {
     "type": "git",
@@ -20,11 +19,12 @@
   "devDependencies": {
     "nodemon": "^2.0.3"
   },
-    "bugs": {
+  "bugs": {
     "url": "https://github.com/JeffryLangford/book-worm/issues"
   },
   "homepage": "https://github.com/JeffryLangford/book-worm#readme",
   "dependencies": {
+    "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "connect-session-sequelize": "^7.1.4",
     "dotenv": "^16.0.1",

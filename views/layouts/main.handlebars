@@ -21,6 +21,22 @@
   </header>
     <main>
       {{{ body }}}
+
+<form class="recs" >
+  <input id="book-search" type="text" placeholder="Category..."  name="search" class="input">
+  <button class="btn btn-primary" onclick="performGetRequest2()">Get Todos</button>
+</form>
+ <button class="dropbtn">Dropdown</button>
+  <div class="dropdown-content">
+    <a id="fiction" href="">Fiction</a>
+    <a id='non-fiction' href="">Non-Fiction</a>
+    <a id="poetry" href="">Poetry</a>
+    <a id="biography" >Biography</a>
+  </div>
+<!-- TESTING SEARCH BAR FOR BOOK RECS ABOVE-->
+<div id="getResult2">
+
+</div>
     </main>
     <footer>
       Thanks for visiting!

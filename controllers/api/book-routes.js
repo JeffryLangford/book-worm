@@ -3,47 +3,43 @@ const router = require('express').Router();
 const path = require('path');
 const sequelize = require('../../config/connection');
 //const { User, Library, Index } = require('../models/');
+const axios = require("axios");
 
 const Books = require('../../models/library');
 const https = require('https');
-
+//const  { newValue } = require('../../public/js/library');
 // add user's parameters to url** // testing parameters 
-let url = `https://www.googleapis.com/books/v1/volumes?q=fiction+mystery`;
-let bestSellers = "https://api.nytimes.com/svc/books/v3/lists/hardcover-fiction.json?api-key=tZFDyz4NLXMBFeRo9UhOkGW5lVUo7Lr6";
+//let bestSellers = "https://api.nytimes.com/svc/books/v3/lists/hardcover-fiction.json?api-key=tZFDyz4NLXMBFeRo9UhOkGW5lVUo7Lr6";
 
-// GET route for book recommendations (api/books/recs) ***THIS CODE WORKS*** 
-router.get('/recs', (req, res) => {
-  //res.send('GET request received!');
-    const category = req.body.category;
+// GET route for book recs using axios (api/books/recs) ***THIS CODE WORKS***
+router.get('/recs', async (req, res) => {
+  const params = new URLSearchParams();
+  const category = JSON.stringify(req.body);  
+    params.append("q", `${category}`);
+    const request = {
+      params: params
+    }; 
+      try {
+          const response = await axios.get("https://www.googleapis.com/books/v1/volumes", request)
+          //console.log(response.data);
+          const answers = response.data
+          //res.send(response.data);
+          const { items } = answers;
+          //console.log(items);
+          const searchBooks = items.map(({volumeInfo: {title, authors, description, categories, imageLinks: {thumbnail}}}
+            ) => ({Title: title, Author: [authors], Description: description, Category: [categories], Picture: thumbnail}));
+          console.log(searchBooks);
+          //res.send(searchBooks);
+           // render info in library partials handlebars
+          res.render('partials/book-details',{
+          searchBooks
+        })
+      }
+      catch (err) {
+          console.log(err)
+      }
+  })
 
-    https.get(url, resp => {
-      
-      let data = '';
-      resp.on('data', chunk => { 
-          data += chunk;
-      });
-      // parse data
-      resp.on('end', () => {
-        const answers = JSON.parse(data);
-          //console.log(answers);
-
-        // destructure and create new array
-        const { items } = answers;
-        //console.log(items);
-        const searchBooks = items.map(({volumeInfo: {title, authors, description, categories, imageLinks: {thumbnail}}}
-          ) => ({Title: title, Author: [authors], Description: description, Category: [categories], Picture: thumbnail}));
-       //console.log(searchBooks);
-
-      // render info in library partials handlebars
-      res.render('partials/book-details',{
-      searchBooks
-      })
-      req.on('error', ()=> {
-        console.log('Error :' );
-      })
-    })
-  }) 
-});
 
 // POST route to add book recs to database(api/books/recs)*****************************
 router.post('/recs', (req, res) => {
@@ -60,6 +56,7 @@ router.post('/recs', (req, res) => {
       res.status(500).json(err);
     });
 });
+
 
 // GET route for user's books (api/books/library) ***THIS CODE WORKS*** 
 router.get('/library', (req, res) => 
@@ -88,8 +85,8 @@ router.get('/library', (req, res) =>
         console.log('Error :' );
     }) 
   })
-)
 
+)
 // POST route for user to add a new book into database (api/books/new) ***THIS CODE WORKS***
     // add functionality for user to input data into form and add to database   
 router.post('/new', (req, res) => {
@@ -131,7 +128,7 @@ router.delete('/:id', (req, res) => {
     });
 });
 
-
+/*
 // GET route for bestsellers (api/books/bestsellers) *** THIS CODE WORKS ***
   // add book to library functionality 
 router.get('/bestsellers', (req, res) => {
@@ -168,7 +165,44 @@ router.get('/bestsellers', (req, res) => {
     })
   });
 });
+*/
 
+// TESTING GET route using axios
+router.get('/bestsellers', async (req, res) => {
+  //const params = new URLSearchParams();
+  //const category = JSON.stringify(req.body);  
+    //params.append("q", `${category}`);
+    //const url = "https://api.nytimes.com/svc/books/v3/lists/"
+    //const params = new URLSearchParams();
+    //const category = JSON.parse(JSON.stringify(req.body));  
+    const category = JSON.stringify(req.params);
+      //params.append(`${category}`);
+      //const request = {
+       // params: params
+      //}; 
+    //const request = JSON.stringify(req.body);
+    
+      try {
+          const response = await axios.get("https://api.nytimes.com/svc/books/v3/lists/" + category + ".json?api-key=tZFDyz4NLXMBFeRo9UhOkGW5lVUo7Lr6")
+          const answers = response.data
+          //res.send(response.data);
+                  // destructure object
+        const { results:{ list_name, books}} = answers;
+        console.log(list_name);
+        
+        // create a new array of bestselling books 
+        const nyTimes = books.map(({rank, title, author, description, book_image}) => ({Rank: rank, Title: title, Author: author, Description: description, Picture: book_image}));
+        console.log(nyTimes);
+        res.render('partials/bestsellers-details',{
+          nyTimes,
+          list_name
+        })
+      }
+      catch (err) {
+          console.log(err)
+      }
+        })
+     
 // POST route to add a bestseller to user's library (api/books/bestsellers) ***THIS CODE WORKS***
 router.post('/bestsellers', (req, res) => {
   //res.send(req.body);
