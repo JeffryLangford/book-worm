@@ -90,5 +90,6 @@ module.exports = {
     Comment,
     Vote,
     Post,
-    User
+    User,
+    Books
 }

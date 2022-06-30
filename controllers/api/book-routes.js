@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const path = require('path');
 const axios = require("axios");
-const { Choice, User, Comment, Post } = require('../../models');
-const Books = require('../../models/library');
+const { Choice, User, Comment, Post, Books } = require('../../models');
+//const Books = require('../../models/library');
 //const Books = require('../../models/library');
 
 // GET route for book recs using axios (api/books/recs) ***THIS CODE WORKS***
@@ -51,7 +51,6 @@ router.post('/recs', (req, res) => {
 });
 
 // GET route for user's books (api/books/library) ***THIS CODE WORKS*** 
-  // this route can be moved to user-routes.js
 router.get('/library', (req, res) => 
 
   Books.findAll({
@@ -80,9 +79,8 @@ router.get('/library', (req, res) =>
   })
 )
 
-/*
+
 // POST route for user to add a new book into database (api/books/new) ***THIS CODE WORKS***
-// THIS route is already in user routes(not needed)
     // add functionality for user to input data into form and add to database   
 router.post('/new', (req, res) => {
   
@@ -91,8 +89,7 @@ router.post('/new', (req, res) => {
        title: req.body.title,
        genre: req.body.genre,
        author: req.body.author, 
-       user_id: req.body.user_id,
-       post_id: req.body.post_id  
+       user_id: req.body.user_id      
   })
   .then(answer => res.json(answer))
   
@@ -102,7 +99,7 @@ router.post('/new', (req, res) => {
       res.status(500).json(err);
     })
 });
-*/
+
 
 // DELETE route for user to delete book by id (/api/books/:id) **THIS CODE WORKS**
 router.delete('/:id', (req, res) => {
@@ -169,11 +166,10 @@ router.post('/bestsellers', (req, res) => {
 });
 
 // GET route for user's dashboard (api/books/dashboard) ***THIS CODE WORKS*** 
-  // this route can also be moved to user-routes.js
-  // Choice table needs to be added 
+  // Choice and Books table needs to be added 
 router.get('/dashboard', async (req, res) => {
  const results = await User.findAll({
- 
+ model: Books,
   attributes: {
     exclude: ['password'],
   },
