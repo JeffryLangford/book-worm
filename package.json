@@ -8,7 +8,6 @@
     "start": "node server.js",
     "watch": "nodemon server.js",
     "seed": "node seeds/index.js"
-
   },
   "repository": {
     "type": "git",
@@ -20,7 +19,7 @@
   "devDependencies": {
     "nodemon": "^2.0.3"
   },
-    "bugs": {
+  "bugs": {
     "url": "https://github.com/JeffryLangford/book-worm/issues"
   },
   "homepage": "https://github.com/JeffryLangford/book-worm#readme",
@@ -31,6 +30,7 @@
     "express-handlebars": "^6.0.6",
     "express-session": "^1.17.3",
     "express.js": "^1.0.0",
+    "jquery": "^3.6.0",
     "mysql2": "^2.3.3",
     "nodemon": "^2.0.18",
     "sequelize": "^6.21.0"

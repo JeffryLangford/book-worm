@@ -60,3 +60,13 @@ display: block;
 .dropdown:hover .dropdown-content {
 display: block;
 }
+
+@media only screen and (max-width: 600px) {
+  #hero{
+      overflow:scroll;
+      
+  }
+}
+div{
+  overflow: scroll;
+}

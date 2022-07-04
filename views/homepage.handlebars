@@ -4,9 +4,17 @@
     <div class="p-2 mx-2">
         <p class="h2 text-start">My Preferences</p>
         <p class="h2 text-start">Recommended Books</p>
+                    <div>
+                <form id="bookSearch"></form>
+                <!-- form label -->
+                <label>
+                    <p>Search For Books:</p>
+                </label>
+                <!-- input box -->
+                <input type="text" placeholder="Search for books here" id="bookSearch"/>
+                <button id="searchBookbutton" type="submit">Search</button>
+            </div>
     </div>
-</div>
-
 {{else}}
 <div class="d-inline-flex justify-content-between">
     <div class="bg-success bg-opacity-50 m-2 w-50 p-4 border-top border-bottom border-3 border-secondary rounded">
@@ -42,8 +50,17 @@
                 <button type="submit" id="button" class="btn-success btn m-1">signup</button>
             </div>
             </form>
+            <div>
+                <form id="bookSearch"></form>
+                <!-- form label -->
+                <label>
+                    <p>Search For Books:</p>
+                </label>
+                <!-- input box -->
+                <input type="text" placeholder="Search for books here" id="bookSearch"/>
+            </div>
             <script src="/js/login.js"></script>
+            <script src="/js/api-fetch.js"></script>
     </div>
 </div>
-<!--<script src="/public/js/api-fetch.js"></script>-->
 {{/if}}
