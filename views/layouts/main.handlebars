@@ -40,6 +40,22 @@
     <main class="text-center">
       {{{ body }}}
     </main>
+
+    <form class="recs" >
+  <input id="book-search" type="text" placeholder="Category..."  name="search" class="input">
+  <button class="btn btn-primary" onclick="performGetRequest2()">Get Todos</button>
+</form>
+ <button class="dropbtn">Dropdown</button>
+  <div class="dropdown-content">
+    <a id="fiction" href="">Fiction</a>
+    <a id='non-fiction' href="">Non-Fiction</a>
+    <a id="poetry" href="">Poetry</a>
+    <a id="biography" >Biography</a>
+  </div>
+<!-- TESTING SEARCH BAR FOR BOOK RECS ABOVE-->
+<div id="getResult2">
+
+</div>
     
     <footer class="text-center mt-4">
       Copyright © Chomiak, Haberle, Langford, Maldanado, Ramos 2022
@@ -47,6 +63,7 @@
   </div>
   {{#if loggedIn}}
   <script src="/js/logout.js"></script>
+  <script src="/js/library.js"></script>
   {{/if}}
 </body>
 

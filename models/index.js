@@ -3,12 +3,16 @@ const Comment = require("./Comment");
 const Vote = require("./Vote");
 const Post = require("./Post");
 const User = require("./User");
-
+const Books = require("./Library");
 
 //many to many relationship - defined in votes model
 
 //=============================================
 User.hasMany(Post,{
+    foreignKey:'user_id'
+});
+
+User.hasMany(Books,{
     foreignKey:'user_id'
 });
 
@@ -84,5 +88,6 @@ module.exports = {
     Comment,
     Vote,
     Post,
-    User
+    User,
+    Books
 }
