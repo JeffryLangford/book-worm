@@ -1,9 +1,18 @@
-<section class="card">
-  <a href="/painting/{{id}}">
-    <header>{{title}}</header>
+      <!-- RENDERS USER'S LIBRARY -->
 
-    <div class="card-body">
-      <p>By: {{author}}</p>
-    </div>
-  </a>
-</section>
+      <div>
+      <h2>Your Library:</h2>
+
+       {{#each books}}  
+
+       <h3>{{Title}}</h3>
+
+       <p>Author: {{Author}} </p>
+       <p>Category: {{Category}}</p>
+       <p>User: {{User}}</p>
+       <p>Book Id: {{Id}}</p>
+
+
+       {{/each}} 
+      </div>
+      <!-- RENDERS USER'S LIBRARY ABOVE-->
